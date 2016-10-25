@@ -15,6 +15,30 @@ function updateStats(torrent,id) {
     document.getElementById(id).innerHTML=str
 }
 
+function showFilesxxx(fileList,id)
+{
+    var str="<p> Total Number of Files: "+fileList.length
+    str+="<ul>"
+    for(i=0;i<fileList.length;i++){
+        str+="<li>"+fileList[i].name+'</li><button id="removeFile'+i+'"'+'onclick="removeFile('+'this.closest("div").prop("id"),'+i+')">Remove</button>'
+    }        
+    str+="</ul>"
+    str+="</p>"
+    $("#"+id).html(str)
+}
+
+
+function showFiles(fileList,id)
+{
+    var str="<p> Total Number of Files: "+fileList.length
+    str+="<ul>"
+    for(i=0;i<fileList.length;i++){
+        str+="<li>"+fileList[i].name+"</li>"
+    }        
+    str+="</ul>"
+    str+="</p>"
+    $("#"+id).html(str)
+}
 function log (str,className="log") {
     var p = document.createElement('p')
     p.innerHTML = str

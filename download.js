@@ -14,15 +14,7 @@ function start() {
                 '<a href="' + torrent.torrentFileBlobURL + '" target="_blank" download="' + torrent.name + '.torrent">[Download .torrent]</a>'
         )
         
-        var $d=$("#data")
-        $d.append("<p> Total Number of Files:  "+torrent.files.length)
-        $d.append("<ul>")
-        
-        for(i=0;i<torrent.files.length;i++){
-            $d.append("<li>"+torrent.files[i].name)
-        }        
-        $d.append("</ul>")
-
+        showFiles(torrent.files,"showFiles")
         var interval = setInterval(function(){updateStats(torrent,"showprogress")}, 3000)
         
         // torrent.on('done', function () {

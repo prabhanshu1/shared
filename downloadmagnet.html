@@ -1,21 +1,21 @@
 <Html>
   <head>
     <title>  Web RTC  </title>
-  </head>
-  
-  <body>
-    <textarea id="torrent"></textarea>
-    <button onclick="start()"> Start</button>
-    <div id="play"></div>
-    <div id="play2"></div>
-    <div class="log">
-      <p id="data"></p>
-      <p id="showprogress"></p>
-    </div>
-      <script src="modules/webtorrent.min.js"></script>
+    <script src="modules/webtorrent.min.js"></script>
       <script src="modules/jquery.min.js"></script>
       <script src="download.js"></script>
       <script src="util.js"></script>
+  </head>
+  
+  <body>
+    <div>
+    <textarea id="torrent"></textarea>
+    <button onclick="start()"> Start</button>
+
+    <p id="showFiles"></p>
+    <p id="showprogress"></p>
+    <div class="log">  </div>
+    </div>
 
   </body>
 
