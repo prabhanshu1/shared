@@ -54,7 +54,7 @@ ROOT_URLCONF = 'cs455Project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ["/home/pabhi/acads/softwareEngineering/project/cs455Project/shared/template/shared"],
+        'DIRS': ["./shared/template/shared"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
