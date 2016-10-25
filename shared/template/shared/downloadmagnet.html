@@ -1,14 +1,17 @@
 <Html>
   <head>
+    {% load static %}
     <title>  Web RTC  </title>
-    <script src="modules/webtorrent.min.js"></script>
-      <script src="modules/jquery.min.js"></script>
-      <script src="download.js"></script>
-      <script src="util.js"></script>
+    <script src="{% static "js/modules/webtorrent.min.js" %}"></script>
+    <script src="{% static "js/modules/dragdrop.min.js" %}" ></script>
+    <script src="{% static "js/modules/jquery.min.js" %}"></script>
+    <script src="{% static "js/util.js"%}"></script>
+    <script src="{% static "js/download.js"%}"></script>
+    
   </head>
   
   <body>
-    <div>
+    <div class="seeder" >
     <textarea id="torrent"></textarea>
     <button onclick="start()"> Start</button>
 
