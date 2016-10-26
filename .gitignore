@@ -1,2 +1,2 @@
-cs455Project/__pycache__/*
-shared/__pycache__/*
+__pycache__/
+db.sqlite3

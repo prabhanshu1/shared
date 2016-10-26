@@ -9,17 +9,18 @@
     <script src="{% static "js/download.js"%}"></script>
     
   </head>
+
   
   <body>
-    <div class="seeder" >
-    <textarea id="torrent"></textarea>
-    <button onclick="start()"> Start</button>
+{% for torrent in torrentURI %}
+    <div class="downloader" id="div{{forloop.counter}}" value={{torrent.magnet_link}} >
+    <button onclick="start(this.closest('div'))"> Start</button>
 
     <p id="showFiles"></p>
     <p id="showprogress"></p>
     <div class="log">  </div>
     </div>
-
+{% endfor %}
   </body>
 
     

@@ -1,13 +1,11 @@
 var client = new WebTorrent()
 
-// Sintel, a free, Creative Commons movie
-var torrentId =document.getElementById("torrent");
-
-
-function start() {
-    client.add(document.getElementById("torrent").value,onTorrent);
-
+function start(divId) {
+    console.log($(divId).attr("value"))
+    client.add($(divId).attr("value"),onTorrent);
+    console.log("sadfdsf")
     function onTorrent (torrent) {
+        console.log("s333333")
         log(
             'Torrent info hash: ' + torrent.infoHash + ' ' +
                 '<a href="' + torrent.magnetURI + '" target="_blank">[Magnet URI]</a> ' +
@@ -15,7 +13,7 @@ function start() {
         )
         
         showFiles(torrent.files,"showFiles")
-        var interval = setInterval(function(){updateStats(torrent,"showprogress")}, 3000)
+        var interval = setInterval(function(){updateStats(torrent,"showprogress")}, 1000)
         
         // torrent.on('done', function () {
         //     updateStats(torrent)
@@ -40,8 +38,3 @@ function start() {
     }
     
 };
-
-
-
-
-

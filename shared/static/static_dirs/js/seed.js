@@ -1,37 +1,45 @@
-var client = new WebTorrent()
+var client=new WebTorrent();
 var torr;
 var fileStore=[];
 
-jQuery("input#upload").change(function(){
+function addFiles(){
     var fileList = document.getElementById("upload").files
     fileStore.push.apply(fileStore,fileList)
     showFilesxxx(fileStore,"selectedFiles");
-})
-
-function stopSeeding(divId){
-    console.log($(divId))
-    var magnetURI=$(divId).attr("value")
-    client.remove(magnetURI)
 }
 
+function stopSeeding(divId){
+    client.remove($(divId).attr("value"))
+}
+
+
 function startSeeding (divId) {
-    
+
     client.seed(fileStore, function (torrent) {
         //fileStore=[];
+
         $(divId).attr("value",torrent.magnetURI)
         torr=torrent;
-        setInterval(function(){updateStats(torrent,"showprogress")}, 3000)
+
+        setInterval(function(){updateStats(torrent,"showprogress");}, 1000)
 
         torrent.files.forEach(function (file) {
             file.appendTo('.log',{autoplay:false}, function (err, elem) {
                 if (err) throw err // file failed to download or display in the DOM
             })
         })
-        console.log('Client is seeding ' + torrent.magnetURI)
-        $.post("postdata",{name:"Chutiya",magnetURI: torrent.magnetURI})
-            .done(function(data){
-                $("#returnedData").html(data)
-            })
+        $.ajax({
+            type: 'POST',
+            url:"postdata",
+            data:{name:"Chutiya",magnetURI: torrent.magnetURI},
+            async:true
+        })
+        
+        // $.post("postdata",{name:"Chutiya",magnetURI: torrent.magnetURI})
+        //     .done(function(data){
+        //         $("#returnedData").html(data)
+        //     })
+        console.log(client.torrents)
     })
 
     //    onFiles(jQuery(this).val())
@@ -61,7 +69,3 @@ function onFiles (files) {
 //     console.log('Client is seeding ' + torrent.magnetURI)
 //   })
 // })
-
-
-
-

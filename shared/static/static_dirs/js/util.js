@@ -15,12 +15,21 @@ function updateStats(torrent,id) {
     document.getElementById(id).innerHTML=str
 }
 
+function removeFile(fileId)
+{
+
+    if (fileId > -1) {
+        fileStore.splice(fileId,1);
+        showFilesxxx(fileStore,"selectedFiles")
+    }
+    
+}
 function showFilesxxx(fileList,id)
 {
     var str="<p> Total Number of Files: "+fileList.length
     str+="<ul>"
     for(i=0;i<fileList.length;i++){
-        str+="<li>"+fileList[i].name+'</li><button id="removeFile'+i+'"'+'onclick="removeFile('+'this.closest("div").prop("id"),'+i+')">Remove</button>'
+        str+="<li>"+fileList[i].name+'</li><button id="removeFile'+i+1+'"'+'onclick="removeFile('+i+')">Remove</button>'
     }        
     str+="</ul>"
     str+="</p>"

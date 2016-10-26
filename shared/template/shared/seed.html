@@ -16,7 +16,7 @@
 
     <div class="seeder" value="adsf">
     <p id="selectedFiles"></p>
-    <input type="file" id="upload" multiple></input>
+    <input type="file" id="upload" multiple onchange="addFiles()"></input>
     {% csrf_token %}
     <button id="startSeeding" value="Seed" onclick="startSeeding(this.closest('div'))">Start Seeding</button>
     <button id="stopSeeding" value="" onclick="stopSeeding(this.closest('div'))" >Stop Seeding</button>
@@ -25,12 +25,12 @@
     
     <div class="log"></div>
 
-    </div>
-  </body> 
-
   <script src="{% static "js/seed.js"%}"></script>
   <script src="{% static "js/util.js"%}"></script>
  
+    </div>
+  </body> 
+
     
 </html>
 
