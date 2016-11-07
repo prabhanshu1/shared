@@ -7,22 +7,30 @@ import time
 
 
 def seed(request):
-    return render(request, 'seed.html')
+    username = None
+    if request.user.is_authenticated():
+        username = request.user.username
+    return render(request, 'seed.html', {'name': username})
 
 
 def download(request):
-    return render(request, 'downloadmagnet.html', {'torrentURI':
-                                                   SharedList.objects.all()})
+    username = None
+    if request.user.is_authenticated():
+        username = request.user.username
+    return render(request, 'downloadmagnet.html',
+                  {'name': username, 'torrentURI': SharedList.objects.all()})
 
 
 def postdata(request):
     print(request)
     if request.method == 'POST':
         magnet_link = request.POST['magnetURI']
-        original_seeder = request.POST['name']
+        username = None
+        if request.user.is_authenticated():
+            username = request.user.username
         start_time = int(time.time())
         rec = SharedList(magnet_link=magnet_link,
-                         original_seeder=original_seeder,
+                         seeder=username,
                          start_time=start_time)
         rec.save()
         return render(request, 'downloadmagnet.html')
@@ -32,18 +40,18 @@ def updatedata(request):
     if request.method == 'POST':
         # original_seeder = request.POST['name']
         torrentList = request.POST.getlist('torrent[]')
-        print("Printing getlist")
         username = None
         if request.user.is_authenticated():
             username = request.user.username
-        print(username," printed username")
-        # for torrent in torrentList:
-        #     try:
-        #         print(" in try block")
-        #         magnet_link=SharedList.objects.get(magnet_link=torrent);
-        #         print(magnet_link.seeders)
-        #     except SharedList.DoesNotExist:
-        #         magnet_link=SharedList(magnet_link=torrent,add_time=time(),seeders=[username])
-        #         print(magnet_link," exception  printed torrent")
-        # print(" printedlads.fads")
-        return render(request, 'seed.html')
+        for torrent in torrentList:
+            try:
+                print(" in try block")
+                magnet_link=SharedList.objects.get(magnet_link=torrent);
+            except SharedList.DoesNotExist:
+                magnet_link=SharedList(magnet_link=torrent, seeder=username)
+                magnet_link.save()
+                print(magnet_link.magnet_link," exception  printed torrent")
+        username = None
+        if request.user.is_authenticated():
+            username = request.user.username
+        return render(request, 'seed.html', {'name': username})

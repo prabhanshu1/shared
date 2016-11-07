@@ -10,7 +10,7 @@ window.setInterval(function(){
         data: {'torrent[]': torrentList },
         async: true
     });
-}, 5000);
+}, 10000);
 
 function addFiles() {
     var fileList = document.getElementById("upload").files;
@@ -28,9 +28,7 @@ function startSeeding(divId) {
     client.seed(fileStore, function(torrent) {
         //fileStore=[];
         torrentList.push(torrent.magnetURI);
-        torrentList.push(torrent.magnetURI);
-        torrentList.push(torrent.magnetURI);
-
+      
         $(divId).attr("value", torrent.magnetURI);
         torr = torrent;
 
