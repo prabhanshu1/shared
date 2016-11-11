@@ -25,6 +25,10 @@ def postdata(request):
     print(request)
     if request.method == 'POST':
         magnet_link = request.POST['magnetURI']
+        emailList = request.POST.getlist('emailList[]')
+        print("printing emaillist")
+        print(emailList)
+        print("printed emaillist")
         username = None
         if request.user.is_authenticated():
             username = request.user.username

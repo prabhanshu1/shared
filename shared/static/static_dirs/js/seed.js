@@ -1,8 +1,9 @@
 var client = new WebTorrent();
 var torr;
-var fileStore = [];
+var fileStore = {};
+var emailStore= {};
 var torrentList =[];
-
+var test;
 window.setInterval(function(){
     $.ajax({
         type: 'POST',
@@ -12,10 +13,33 @@ window.setInterval(function(){
     });
 }, 10000);
 
-function addFiles() {
-    var fileList = document.getElementById("upload").files;
-    fileStore.push.apply(fileStore, fileList);
-    showFilesxxx(fileStore, "selectedFiles");
+function addFiles(div) {
+    //test=div;
+    var fileList= div.children.upload.files;
+    // if ($.inArray(fileList,fileStore[div.id]) != -1)
+    // {
+    //     alert("Files: "+fileList+" Already Added to file List");
+    //     return;
+    // }
+    if(typeof fileStore[div.id] === "undefined") {
+        fileStore[div.id]=[];
+    }
+    fileStore[div.id].push.apply(fileStore[div.id], fileList);
+    showFilesxxx(div);
+}
+
+function addEmails(div) {
+    var email= div.children.email.value;
+    if ($.inArray(email,emailStore[div.id]) != -1)
+    {
+        alert("Email: "+email+" Already Added to Email List");
+        return;
+    }
+    if(typeof emailStore[div.id] === "undefined") {
+        emailStore[div.id]=[];
+    }
+    emailStore[div.id].push( email);
+    showEmailsxxx(div);
 }
 
 function stopSeeding(divId) {
@@ -25,10 +49,9 @@ function stopSeeding(divId) {
 
 function startSeeding(divId) {
 
-    client.seed(fileStore, function(torrent) {
-        //fileStore=[];
+    client.seed(fileStore[divId.id], function(torrent) {
         torrentList.push(torrent.magnetURI);
-      
+
         $(divId).attr("value", torrent.magnetURI);
         torr = torrent;
 
@@ -47,7 +70,7 @@ function startSeeding(divId) {
             type: 'POST',
             url: "postdata",
             data: {
-                name: "Chutiya",
+                'emailList[]':emailStore[divId.id],
                 magnetURI: torrent.magnetURI
             },
             async: true

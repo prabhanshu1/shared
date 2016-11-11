@@ -12,10 +12,13 @@
 
   <body>
 
-    <div class="seeder" value="adsf">
-    <p id="selectedFiles"></p>
-    <input type="file" id="upload" multiple onchange="addFiles()"></input>
+    <div class="seeder" id="seeder" value="adsf">
+        <p id="selectedFiles"></p>
+        <p id="selectedEmails"></p>
+    <input type="file" id="upload" multiple onchange="addFiles(this.closest('div'))"></input>
     {% csrf_token %}
+    <input type="email" id="email"></input>
+    <button id="addEmail"  onclick="addEmails(this.closest('div'))">Add Email </button>
     <button id="startSeeding" value="Seed" onclick="startSeeding(this.closest('div'))">Start Seeding</button>
     <button id="stopSeeding" value="" onclick="stopSeeding(this.closest('div'))" >Stop Seeding</button>
     <p id="returnedData"></p>

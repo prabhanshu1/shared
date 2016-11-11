@@ -15,27 +15,48 @@ function updateStats(torrent,id) {
     document.getElementById(id).innerHTML=str
 }
 
-function removeFile(fileId)
+function removeFile(div,fileId)
 {
-
     if (fileId > -1) {
-        fileStore.splice(fileId,1);
-        showFilesxxx(fileStore,"selectedFiles")
+        fileStore[div.id].splice(fileId,1);
+        showFilesxxx(div)
     }
-    
 }
-function showFilesxxx(fileList,id)
+
+function showFilesxxx(div)
 {
+    fileList=fileStore[div.id];
     var str="<p> Total Number of Files: "+fileList.length
     str+="<ul>"
     for(i=0;i<fileList.length;i++){
-        str+="<li>"+fileList[i].name+'</li><button id="removeFile'+i+1+'"'+'onclick="removeFile('+i+')">Remove</button>'
-    }        
+        str+="<li>"+fileList[i].name+'</li><button id="removeFile'+i+1+'"'+'onclick="removeFile('+div.id+","+i+')">Remove</button>'
+    }
     str+="</ul>"
     str+="</p>"
-    $("#"+id).html(str)
+    $(div.children.selectedFiles).html(str)
 }
 
+function showEmailsxxx(div)
+{
+    emailList=emailStore[div.id];
+    var str="<p> Total Emails Added: "+emailList.length
+    str+="<ul>"
+    for(i=0;i<emailList.length;i++){
+        str+="<li>"+emailList[i]+'</li><button id="removeEmail'+i+1+'"'+'onclick="removeEmail('+div.id+","+i+')">Remove</button>'
+    }
+    str+="</ul>"
+    str+="</p>"
+    $(div.children.selectedEmails).html(str)
+}
+
+
+function removeEmail(div,emailId)
+{
+    if (emailId > -1) {
+        emailStore[div.id].splice(emailId,1);
+        showEmailsxxx(div)
+    }
+}
 
 function showFiles(fileList,id)
 {
