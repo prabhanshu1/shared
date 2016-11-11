@@ -47,16 +47,17 @@ function stopSeeding(divId) {
 }
 
 
-function startSeeding(divId) {
+function startSeeding(div) {
 
-    client.seed(fileStore[divId.id], function(torrent) {
+    client.seed(fileStore[div.id], function(torrent) {
         torrentList.push(torrent.magnetURI);
 
-        $(divId).attr("value", torrent.magnetURI);
+        $(div).attr("value", torrent.magnetURI);
         torr = torrent;
-
+        console.log("logging div")
+        console.log(div)
         setInterval(function() {
-            updateStats(torrent, "showprogress");
+            updateStats(torrent,div);
         }, 1000);
 
         torrent.files.forEach(function(file) {
@@ -70,7 +71,7 @@ function startSeeding(divId) {
             type: 'POST',
             url: "postdata",
             data: {
-                'emailList[]':emailStore[divId.id],
+                'emailList[]':emailStore[div.id],
                 magnetURI: torrent.magnetURI
             },
             async: true

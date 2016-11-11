@@ -8,11 +8,12 @@ function formatBytes(bytes,decimals) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
-function updateStats(torrent,id) {
+function updateStats(torrent,div) {
     var str="<p> Down Speed: "+formatBytes(torrent.downloadSpeed)+"/s\t Up Speed: "+formatBytes(torrent.uploadSpeed)+"/s</p>"+
         "<p> Peers: "+torrent.numPeers+" Total Downloaded: "+formatBytes(torrent.downloaded)+"</p>"+
         "<p> Progress "+(torrent.progress*100).toFixed(1)+"%"+"\tTime Remaining: "+(torrent.timeRemaining/1000).toFixed(1)+" Sec" +"</p>"
-    document.getElementById(id).innerHTML=str
+    //test=div;
+    $(div.children.showProgress).html(str)
 }
 
 function removeFile(div,fileId)
@@ -58,21 +59,22 @@ function removeEmail(div,emailId)
     }
 }
 
-function showFiles(fileList,id)
+function showFiles(fileList,div)
 {
     var str="<p> Total Number of Files: "+fileList.length
     str+="<ul>"
     for(i=0;i<fileList.length;i++){
         str+="<li>"+fileList[i].name+"</li>"
-    }        
+    }
     str+="</ul>"
     str+="</p>"
-    $("#"+id).html(str)
+    $(div.children.showFiles).html(str)
 }
-function log (str,className="log") {
+function log (str,div) {
     var p = document.createElement('p')
     p.innerHTML = str
-    document.querySelector('.'+className).appendChild(p)
+    // document.querySelector('.'+className).appendChild(p)
+    $(div.children.log).append(p)
 }
 
 
