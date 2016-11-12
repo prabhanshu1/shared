@@ -34,7 +34,7 @@ def display(request):
         othersTorrent= othersTorrent.exclude(seeders=friend)
 
     return render(request, 'display.html',
-                  {'name': username,'friendsTorrent':friendsTorrent,'torrentsFromSelf':user.seeders.all(),'torrentsFromOther': othersTorrent})
+                  {'friendsTorrent':friendsTorrent,'torrentsFromSelf':user.seeders.all(),'torrentsFromOther': othersTorrent})
 
 
 def download(request):
@@ -60,7 +60,7 @@ def download(request):
         othersTorrent= othersTorrent.exclude(seeders=friend)
 
     return render(request, 'downloadmagnet.html',
-                  {'name': username,'friendsTorrent':friendsTorrent,'torrentsFromSelf':user.seeders.all(),'torrentsFromOther': othersTorrent})
+                  {'friendsTorrent':friendsTorrent,'torrentsFromSelf':user.seeders.all(),'torrentsFromOther': othersTorrent})
 
 
 def postdata(request):
