@@ -1,0 +1,116 @@
+<Html>
+    <head>
+        {% load static %}
+
+        <title>  Shared  </title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <!-- Optional Bootstrap theme -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+        <!-- <link rel="stylesheet" href="{% static "css/display.css" %}"> -->
+        <script src="{% static "js/modules/webtorrent.min.js" %}"></script>
+        <script src="{% static "js/modules/dragdrop.min.js" %}" ></script>
+        <script src="{% static "js/modules/jquery.min.js" %}"></script>
+        <script src="{% static "js/util.js"%}"></script>
+        <script src="{% static "js/download.js"%}"></script>
+
+        
+    </head>
+    <body>
+        {% if user.is_authenticated %}
+        <h6>Welcome, {{ user.get_username }}. Thanks for logging in.</h6>
+        {% else %}
+        <p>Welcome, new user. Please log in.</p>
+        <a href="{% url django.contrib.auth.login %}">Login</a>
+        {% endif %}
+        <div class="bigcontainer">
+            <div class="row">
+                <div class="col-md-8"><hr>
+                    <h1>Download</h1>
+                    <h2> Torrent From SELF</h2>
+
+                    {% for torrent in torrentsFromSelf %}
+                    <div class="downloader" id="divSelf{{forloop.counter}}" value={{torrent}} >
+                        <p> Torrent {{forloop.counter}}</p>
+                        <button onclick="start(this.closest('div'))"> Start</button>
+                        <p id="showFiles"></p>
+                        <p id="showProgress"> </p>
+                        <div class="log" id="log">  </div>
+                    </div>
+                    {% endfor %}
+
+                    <hr>
+
+                    <h2> Torrent from Friends</h2>
+
+                    {% for key,value in friendsTorrent.items %}
+                    <p> Torrent from {{key}} </p>
+                    {% for torrent in value %}
+                    <div class="downloader" id="div{{key}}{{forloop.counter}}" value={{torrent}} >
+                        <p> Torrent {{forloop.counter}}</p>
+                        <button onclick="start(this.closest('div'))"> Start</button>
+                        <p id="showFiles"></p>
+                        <p id="showProgress"> </p>
+                        <div class="log" id="log">  </div>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+
+                    <hr>
+
+                    <h2> Torrent From Others</h2>
+
+
+                    {% for torrent in torrentsFromOther %}
+                    <p> Torrent seeders: {% for seeders in torrent.seeders.all %} {{seeders.email}} {% endfor %} </p>
+
+                    <div class="downloader" id="divOthers{{forloop.counter}}" value={{torrent.magnet_link}} >
+                        <p> Torrent {{forloop.counter}}</p>
+                        <button onclick="start(this.closest('div'))"> Start</button>
+                        <p id="showFiles"></p>
+                        <p id="showProgress"> </p>
+                        <div class="log" id="log">  </div>
+                    </div>
+                    {% endfor %}
+
+                </div>
+                <div class="col-md-4">
+                    <h1> Seed </h1>
+                    <div id="container">
+                        <div class="seeder" id="seeder" >
+                            <p id="selectedFiles"></p>
+                            <p id="selectedEmails"></p>
+                            <p id="friendsToAdd"></p>
+                            <input type="file" id="upload" multiple onchange="addFiles(this.closest('div'))"></input>
+                            <br><br>
+                            {% csrf_token %}
+                            <input type="email" id="email"></input>
+                            <button id="addEmail"  onclick="addEmails(this.closest('div'))">Add Email </button>
+                            <button id="addFriend"  onclick="addFriends(this.closest('div'))">Add to Friend List </button>
+                            <br><br>
+                            <button id="startSeeding" value="Seed" onclick="startSeeding(this.closest('div'))">Start Seeding</button>
+                            <button id="stopSeeding" value="" onclick="stopSeeding(this.closest('div'))" >Stop Seeding</button>
+                            <p id="returnedData"></p>
+                            <p id="showProgress"></p>
+
+                            <div class="log" id="log"></div>
+
+                            <script src="{% static "js/seed.js"%}"></script>
+                            <script src="{% static "js/util.js"%}"></script>
+                            <hr>
+                            <br>
+                        </div>
+
+                    </div>
+                    <br>
+                    <button id="addSeeder"  onclick="addSeederDiv()">Add Another Seeder </button>
+                    <hr>
+                </div>
+            </div>
+        </div>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </body>
+
+</html>
