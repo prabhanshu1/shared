@@ -11,7 +11,30 @@ def seed(request):
     username = None
     if request.user.is_authenticated():
         username = request.user.username
-    return render(request, 'seed.html', {'name': username})
+    return render(request, 'seed.html')
+
+def display(request):
+    username = None
+    if request.user.is_authenticated():
+        username = request.user.username
+
+    user=User.objects.get(username=username);
+    print("printing friendsList")
+    print(user.profile.friendsList)
+    print("printed friendsList")
+    allowed_torrents=user.allowed_users.all();
+    friendsTorrent={}
+    othersTorrent=user.allowed_users.all();
+    #for torrent in user.allowed_users.all():
+
+    for friendEmail in json.loads(user.profile.friendsList):
+        friend=User.objects.get(email=friendEmail)
+        allMagnetLinks=allowed_torrents.filter(seeders=friend);
+        friendsTorrent[friend.email]=allMagnetLinks;
+        othersTorrent= othersTorrent.exclude(seeders=friend)
+
+    return render(request, 'display.html',
+                  {'name': username,'friendsTorrent':friendsTorrent,'torrentsFromSelf':user.seeders.all(),'torrentsFromOther': othersTorrent})
 
 
 def download(request):
