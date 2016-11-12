@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from django.shortcuts import render
 def save_profile(backend, user, response, *args, **kwargs):
     if backend.name == 'google-oauth2':
@@ -6,7 +6,6 @@ def save_profile(backend, user, response, *args, **kwargs):
         print(user)
         print(response)
         try:
-
             user = User.objects.get(email=response["emails"][0]["value"])
             print("printing user;;")
             print(user)
@@ -17,8 +16,6 @@ def save_profile(backend, user, response, *args, **kwargs):
             user.first_name=response["name"]["givenName"]
             user.last_name=response["name"]["familyName"]
             user.save()
-            print("created user;;")
-
             #profile = user.get_profile()
         #if profile is None:
             print("\n\n in end of  save_profile\n\n")

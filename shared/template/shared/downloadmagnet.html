@@ -18,8 +18,10 @@
         <p>Welcome, new user. Please log in.</p>
         <a href="{% url django.contrib.auth.login %}">Login</a>
         {% endif %}
+
         <hr>
-        <p> Torrent From SELF</p>
+
+        <h2> Torrent From SELF</h2>
 
         {% for torrent in torrentsFromSelf %}
         <div class="downloader" id="divSelf{{forloop.counter}}" value={{torrent}} >
@@ -32,10 +34,13 @@
         {% endfor %}
 
         <hr>
-        <p> Torrent From Others</p>
 
-        {% for torrent in torrentsFromOther %}
-        <div class="downloader" id="divOthers{{forloop.counter}}" value={{torrent}} >
+        <h2> Torrent from Friends</h2>
+
+        {% for key,value in friendsTorrent.items %}
+        <p> Torrent from {{key}} </p>
+        {% for torrent in value %}
+        <div class="downloader" id="div{{key}}{{forloop.counter}}" value={{torrent}} >
             <p> Torrent {{forloop.counter}}</p>
             <button onclick="start(this.closest('div'))"> Start</button>
             <p id="showFiles"></p>
@@ -43,6 +48,25 @@
             <div class="log" id="log">  </div>
         </div>
         {% endfor %}
+        {% endfor %}
+
+        <hr>
+
+        <h2> Torrent From Others</h2>
+
+
+        {% for torrent in torrentsFromOther %}
+        <p> Torrent seeders: {% for seeders in torrent.seeders.all %} {{seeders.email}} {% endfor %} </p>
+
+        <div class="downloader" id="divOthers{{forloop.counter}}" value={{torrent.magnet_link}} >
+            <p> Torrent {{forloop.counter}}</p>
+            <button onclick="start(this.closest('div'))"> Start</button>
+            <p id="showFiles"></p>
+            <p id="showProgress"> </p>
+            <div class="log" id="log">  </div>
+        </div>
+        {% endfor %}
+
     </body>
     <!-- <script>
          $( ".downloader" ).each(function( i ) {

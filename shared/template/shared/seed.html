@@ -1,36 +1,52 @@
 <Html>
-  <head>
-    {% load static %}
+    <head>
+        {% load static %}
 
-    <title>  Seeding  </title>
+        <title>  Seeding  </title>
 
-    <script src="{% static "js/modules/webtorrent.min.js" %}"></script>
-    <script src="{% static "js/modules/dragdrop.min.js" %}" ></script>
-    <script src="{% static "js/modules/jquery.min.js" %}"></script>
+        <script src="{% static "js/modules/webtorrent.min.js" %}"></script>
+        <script src="{% static "js/modules/dragdrop.min.js" %}" ></script>
+        <script src="{% static "js/modules/jquery.min.js" %}"></script>
 
-  </head>
+    </head>
 
-  <body>
+    <body>
+        {% if user.is_authenticated %}
+        <p>Welcome, {{ user.get_username }}. Thanks for logging in.</p>
+        {% else %}
+        <p>Welcome, new user. Please log in.</p>
+        <a href="{% url django.contrib.auth.login %}">Login</a>
+        {% endif %}
+        <div id="container">
+        <div class="seeder" id="seeder" >
+            <p id="selectedFiles"></p>
+            <p id="selectedEmails"></p>
+            <p id="friendsToAdd"></p>
+            <input type="file" id="upload" multiple onchange="addFiles(this.closest('div'))"></input>
+            <br><br>
+            {% csrf_token %}
+            <input type="email" id="email"></input>
+            <button id="addEmail"  onclick="addEmails(this.closest('div'))">Add Email </button>
+            <button id="addFriend"  onclick="addFriends(this.closest('div'))">Add to Friend List </button>
+            <br><br>
+            <button id="startSeeding" value="Seed" onclick="startSeeding(this.closest('div'))">Start Seeding</button>
+            <button id="stopSeeding" value="" onclick="stopSeeding(this.closest('div'))" >Stop Seeding</button>
+            <p id="returnedData"></p>
+            <p id="showProgress"></p>
 
-    <div class="seeder" id="seeder" value="adsf">
-        <p id="selectedFiles"></p>
-        <p id="selectedEmails"></p>
-    <input type="file" id="upload" multiple onchange="addFiles(this.closest('div'))"></input>
-    {% csrf_token %}
-    <input type="email" id="email"></input>
-    <button id="addEmail"  onclick="addEmails(this.closest('div'))">Add Email </button>
-    <button id="startSeeding" value="Seed" onclick="startSeeding(this.closest('div'))">Start Seeding</button>
-    <button id="stopSeeding" value="" onclick="stopSeeding(this.closest('div'))" >Stop Seeding</button>
-    <p id="returnedData"></p>
-    <p id="showProgress"></p>
+            <div class="log" id="log"></div>
 
-    <div class="log"></div>
+            <script src="{% static "js/seed.js"%}"></script>
+            <script src="{% static "js/util.js"%}"></script>
+            <hr>
+            <br>
+        </div>
 
-  <script src="{% static "js/seed.js"%}"></script>
-  <script src="{% static "js/util.js"%}"></script>
-
-    </div>
-  </body>
+        </div>
+        <br>
+        <button id="addSeeder"  onclick="addSeederDiv()">Add Another Seeder </button>
+        <hr>
+    </body>
 
 </html>
 

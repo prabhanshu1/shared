@@ -50,7 +50,6 @@ function showEmailsxxx(div)
     $(div.children.selectedEmails).html(str)
 }
 
-
 function removeEmail(div,emailId)
 {
     if (emailId > -1) {
@@ -58,6 +57,28 @@ function removeEmail(div,emailId)
         showEmailsxxx(div)
     }
 }
+
+function showFriendsxxx(div)
+{
+    friendList=friendStore[div.id];
+    var str="<p> Total Friends t0 Add in Your FriendList: "+friendList.length
+    str+="<ul>"
+    for(i=0;i<friendList.length;i++){
+        str+="<li>"+friendList[i]+'</li><button id="removefriend'+i+1+'"'+'onclick="removeFriend('+div.id+","+i+')">Remove</button>'
+    }
+    str+="</ul>"
+    str+="</p>"
+    $(div.children.friendsToAdd).html(str)
+}
+
+function removeFriend(div,friendId)
+{
+    if (friendId > -1) {
+        friendStore[div.id].splice(friendId,1);
+        showFriendsxxx(div)
+    }
+}
+
 
 function showFiles(fileList,div)
 {
@@ -106,5 +127,3 @@ $.ajaxSetup({
         }
     }
 });
-
-

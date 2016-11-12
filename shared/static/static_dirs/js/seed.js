@@ -2,7 +2,10 @@ var client = new WebTorrent();
 var torr;
 var fileStore = {};
 var emailStore= {};
+var friendStore={};
 var torrentList =[];
+var intervalList={};
+var seederDivNo=1;
 var test;
 window.setInterval(function(){
     $.ajax({
@@ -42,8 +45,39 @@ function addEmails(div) {
     showEmailsxxx(div);
 }
 
-function stopSeeding(divId) {
-    client.remove($(divId).attr("value"));
+function addSeederDiv(){
+
+    var tt=document.getElementById("seeder");
+    var cln=tt.cloneNode(true);
+    cln.id="seeder"+seederDivNo;
+    cln.children.selectedEmails.innerHTML="";
+    cln.children.selectedFiles.innerHTML="";
+    cln.children.friendsToAdd.innerHTML="";
+    cln.children.showProgress.innerHTML="";
+    cln.children.log.innerHTML="";
+    document.getElementById('container').appendChild(cln);
+
+    seederDivNo=seederDivNo+1;
+}
+
+function addFriends(div) {
+    var friend= div.children.email.value;
+    if ($.inArray(friend,friendStore[div.id]) != -1)
+    {
+        alert("Friend: "+friend+" Already Added to Friend List");
+        return;
+    }
+    if(typeof friendStore[div.id] === "undefined") {
+        friendStore[div.id]=[];
+    }
+    friendStore[div.id].push(friend);
+    showFriendsxxx(div);
+}
+
+function stopSeeding(div) {
+    client.remove($(div).attr("value"));
+    $(div.children.log).empty()
+    console.log("deleted log")
 }
 
 
@@ -56,12 +90,17 @@ function startSeeding(div) {
         torr = torrent;
         console.log("logging div")
         console.log(div)
-        setInterval(function() {
+        if(typeof intervalList[div.id] !== "undefined")
+        {
+            clearInterval(intervalList[div.id]);
+        }
+        interval=setInterval(function() {
             updateStats(torrent,div);
         }, 1000);
-
+        intervalList[div.id]=[];
+        intervalList[div.id].push(interval);
         torrent.files.forEach(function(file) {
-            file.appendTo('.log', {
+            file.appendTo($(div.children.log)[0], {
                 autoplay: false
             }, function(err, elem) {
                 if (err) throw err; // file failed to download or display in the DOM
@@ -72,7 +111,8 @@ function startSeeding(div) {
             url: "postdata",
             data: {
                 'emailList[]':emailStore[div.id],
-                magnetURI: torrent.magnetURI
+                magnetURI: torrent.magnetURI,
+                'friendsList[]':friendStore[div.id]
             },
             async: true
         });
