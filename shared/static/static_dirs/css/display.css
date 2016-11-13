@@ -1,14 +1,19 @@
 body {background-color: lightyellow;}
-h6 { text-align: right;}
+h5 { text-align: right;}
 h1 {text-align: center;}
 #heading{ font-size: 24px; }
 #summary { font-size: 24px;}
-#download{ padding-left: 5%;
-			padding-right: 5%; 
+#download{ padding-left: 2%;
+			padding-right: 1%; 
 			background-color: lightblue;
-			height:100%;
-			}
-#Seed { padding-left: 5%;
-		padding-right: 5%;
-		background-color: lightgreen;
-		height:100%;}
+      border-right: 2px dashed #333;
+      height:100%;
+         }
+#Seed { padding-left: 1%;
+		    padding-right: 0%;
+		background-color: lightblue;
+    border-left: 2px dashed #333;
+      }
+.row{height=100%;}
+.bigcontainer{background-color: lightblue;height:inherit;padding-right: 1%;}
+

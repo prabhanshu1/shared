@@ -17,19 +17,18 @@
 
     </head>
     <body>
-        <h1> Shared </h1>
+        <h1> <u>Shared</u> </h1>
         {% if user.is_authenticated %}
-        <h6>Welcome, {{ user.get_username }}. Thanks for logging in.</h6>
+        <h5>Welcome, {{ user.get_username }}. Thanks for logging in.</h5>
         {% else %}
         <p>Welcome, new user. Please log in.</p>
         <a href="{% url django.contrib.auth.login %}">Login</a>
         {% endif %}
-
         <div class="bigcontainer">
             <div class="row">
-                <div class="col-md-8" id="Download">
+                <div class="col-md-7" id="Download">
                     <h1>Download</h1>
-                    <button id = "Refresh" onclick="refresh()"> Refresh </button>
+                    <button id = "Refresh" class="btn btn-lg btn-primary center-block" onclick="refresh()"> Refresh </button>
                     <hr>
                     <details>
                     <summary id="Heading">Torrent From SELF</summary>
@@ -37,8 +36,8 @@
                     {% for torrent in torrentsFromSelf %}
                     <div class="downloader" id="divSelf{{forloop.counter}}" value={{torrent}} >
                         <details id="details">
-                        <summary>Torrent {{forloop.counter}}</summary>
-                        <button onclick="start(this.closest('div'))"> Start</button>
+                        <summary style="font-size:14px">Torrent {{forloop.counter}}</summary>
+                        <button class="btn-success" onclick="start(this.closest('div'))"> Start</button>
                         <p id="showFiles"></p>
                         <p id="showProgress"> </p>
                         <div class="log" id="log">  </div>
@@ -56,7 +55,7 @@
                     <div class="downloader" id="div{{key}}{{forloop.counter}}" value={{torrent}} >
                         <details>
                         <summary> Torrent {{forloop.counter}}</summary>
-                        <button onclick="start(this.closest('div'))"> Start</button>
+                        <button class="btn-success" onclick="start(this.closest('div'))"> Start</button>
                         <p id="showFiles"></p>
                         <p id="showProgress"> </p>
                         <div class="log" id="log">  </div>
@@ -76,7 +75,7 @@
                     <div class="downloader" id="divOthers{{forloop.counter}}" value={{torrent.magnet_link}} >
                         <details>
                         <summary> Torrent {{forloop.counter}}</summary>
-                        <button onclick="start(this.closest('div'))"> Start</button>
+                        <button class="btn-success" onclick="start(this.closest('div'))"> Start</button>
                         <p id="showFiles"></p>
                         <p id="showProgress"> </p>
                         <div class="log" id="log">  </div>
@@ -86,31 +85,36 @@
                     </details>
                     <hr>
                 </div>
-                <div class="col-md-4" id="Seed">
+                <div class="col-md-5" id="Seed">
                     <h1> Seed </h1>
                     <hr>
                     <div id="container">
                         <div class="seeder" id="seeder" >
                         <details>
-                            <summary id="summary">
-                            
+                            <summary id="summary" style="font-size:20px">
+                                Click To Expand
                             </summary>
+                            <br>
+                            <input  type="file" id="upload" multiple onchange="addFiles(this.closest('div'))"></input>
+                            <br>
                             <p id="selectedEmails"></p>
                             <p id="friendsToAdd"></p>
-                            <input type="file" id="upload" multiple onchange="addFiles(this.closest('div'))"></input>
-                            <br><br>
+
+                            <br>
                             {% csrf_token %}
-                            <input type="email" id="email"></input>
-                            <button id="addEmail"  onclick="addEmails(this.closest('div'))">Add Email </button>
-                            <button id="addFriend"  onclick="addFriends(this.closest('div'))">Add to Friend List </button>
+                            <input class="btn" type="email" id="email"></input>
+                            <button id="addEmail" class="btn btn-primary" onclick="addEmails(this.closest('div'))">Add Email </button>
+                            <button id="addFriend" class="btn btn-primary"  onclick="addFriends(this.closest('div'))">Add to Friend List </button>
                             <br><br>
-                            <button id="startSeeding" value="Seed" onclick="startSeeding(this.closest('div'))">Start Seeding</button>
-                            <button id="stopSeeding" value="" onclick="stopSeeding(this.closest('div'))" >Stop Seeding</button>
+                            <button id="startSeeding" value="Seed" class="btn btn-primary" onclick="startSeeding(this.closest('div'))">Start Seeding</button>
+                            <button id="stopSeeding" value="" class="btn btn-warning" onclick="stopSeeding(this.closest('div'))" >Stop Seeding</button>
                             <p id="returnedData"></p>
+                            <br>
                             <p id="showProgress"></p>
 
                             <div class="log" id="log"></div>
-
+                            <br>
+                            <hr>
                             <hr>
                             <br>
                         </details>
@@ -118,7 +122,7 @@
 
                     </div>
                     <br>
-                    <button id="addSeeder"  onclick="addSeederDiv()">Add Another Seeder </button>
+                    <button id="addSeeder" class="btn-success" onclick="addSeederDiv()">Add Another Seeder </button>
                     <hr>
                 </div>
             </div>

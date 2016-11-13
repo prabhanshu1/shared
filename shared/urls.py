@@ -9,5 +9,5 @@ urlpatterns =[
     url(r'^download$', views.download, name='download'),
     url(r'^postdata$', views.postdata, name='postdata'),
     url(r'^updatedata$', views.updatedata, name='updatedata'),
-    url(r'^$', views.seed, name='seed')
+    url(r'^$', views.display, name='display')
 ]

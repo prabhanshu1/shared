@@ -12,7 +12,6 @@ function updateStats(torrent,div) {
     var str="<p> Down Speed: "+formatBytes(torrent.downloadSpeed)+"/s\t Up Speed: "+formatBytes(torrent.uploadSpeed)+"/s</p>"+
         "<p> Peers: "+torrent.numPeers+" Total Downloaded: "+formatBytes(torrent.downloaded)+"</p>"+
         "<p> Progress "+(torrent.progress*100).toFixed(1)+"%"+"\tTime Remaining: "+(torrent.timeRemaining/1000).toFixed(1)+" Sec" +"</p>"
-    //test=div;
     $(div.children[0].children.showProgress).html(str)
 }
 
@@ -30,7 +29,7 @@ function showFilesxxx(div)
     var str="<p> Total Number of Files: "+fileList.length
     str+="<ul>"
     for(i=0;i<fileList.length;i++){
-        str+="<li>"+fileList[i].name+'</li><button id="removeFile'+i+1+'"'+'onclick="removeFile('+div.id+","+i+')">Remove</button>'
+        str+="<li> "+fileList[i].name+'  <button class="btn-sm btn" id="removeFile'+i+1+'"'+'onclick="removeFile('+div.id+","+i+')">Remove</button></li>'
     }
     str+="</ul>"
     str+="</p>"
@@ -44,7 +43,7 @@ function showEmailsxxx(div)
     var str="<p> Total Emails Added: "+emailList.length
     str+="<ul>"
     for(i=0;i<emailList.length;i++){
-        str+="<li>"+emailList[i]+'</li><button id="removeEmail'+i+1+'"'+'onclick="removeEmail('+div.id+","+i+')">Remove</button>'
+        str+="<li>"+emailList[i]+' <button class="btn-sm btn" id="removeEmail'+i+1+'"'+'onclick="removeEmail('+div.id+","+i+')">Remove</button> </li>'
     }
     str+="</ul>"
     str+="</p>"
@@ -65,7 +64,7 @@ function showFriendsxxx(div)
     var str="<p> Total Friends t0 Add in Your FriendList: "+friendList.length
     str+="<ul>"
     for(i=0;i<friendList.length;i++){
-        str+="<li>"+friendList[i]+'</li><button id="removefriend'+i+1+'"'+'onclick="removeFriend('+div.id+","+i+')">Remove</button>'
+        str+="<li>"+friendList[i]+'  <button class="btn-sm btn" id="removefriend'+i+1+'"'+'onclick="removeFriend('+div.id+","+i+')">Remove</button> </li>'
     }
     str+="</ul>"
     str+="</p>"

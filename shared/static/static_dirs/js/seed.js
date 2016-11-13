@@ -52,8 +52,8 @@ function addSeederDiv(){
     var cln=tt.cloneNode(true);
     cln.id="seeder"+seederDivNo;
     cln.children[0].children.selectedEmails.innerHTML="";
-    cln.children[0].children.summary.children[0].innerHTML=""
-    //cln.children[0].children.selectedFiles.innerHTML="";
+    cln.children[0].children.summary.innerHTML="Click To Expand"
+    cln.children[0].children.email.value=""
     cln.children[0].children.friendsToAdd.innerHTML="";
     cln.children[0].children.showProgress.innerHTML="";
     cln.children[0].children.log.innerHTML="";

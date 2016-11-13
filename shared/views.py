@@ -1,10 +1,7 @@
 from django.shortcuts import render
-# from .forms import SeedForm
 from django.contrib.auth.models import User, Group
 from .models import SharedList
-# from django.core.urlresolvers import reverse
 import time
-# from django.contrib import messages
 import json
 
 def seed(request):
@@ -19,13 +16,9 @@ def display(request):
         username = request.user.username
 
     user=User.objects.get(username=username);
-    print("printing friendsList")
-    print(user.profile.friendsList)
-    print("printed friendsList")
     allowed_torrents=user.allowed_users.all();
     friendsTorrent={}
     othersTorrent=user.allowed_users.all();
-    #for torrent in user.allowed_users.all():
 
     for friendEmail in json.loads(user.profile.friendsList):
         friend=User.objects.get(email=friendEmail)
@@ -42,16 +35,9 @@ def download(request):
     if request.user.is_authenticated():
         username = request.user.username
     user=User.objects.get(username=username);
-    #user.profile.friendsList='["pabhi@iitk.ac.in"]'
-    print("printing friendsList")
-    print(user.profile.friendsList)
-    print("printed friendsList")
-    #torrentFromFriends={"name":}
-    #for friend in json.loads(user.profile.friendsList):
     allowed_torrents=user.allowed_users.all();
     friendsTorrent={}
     othersTorrent=user.allowed_users.all();
-    #for torrent in user.allowed_users.all():
 
     for friendEmail in json.loads(user.profile.friendsList):
         friend=User.objects.get(email=friendEmail)
@@ -76,20 +62,16 @@ def postdata(request):
         start_time = int(time.time())
 
         try:
-            print(" in try block")
             rec=SharedList.objects.get(magnet_link=magnet_link);
         except SharedList.DoesNotExist:
             rec = SharedList(magnet_link=magnet_link,
                              start_time=start_time)
             rec.save()
-            print(rec.magnet_link," exception  printed torrent")
-
 
         user = None
 
         try:
             user=User.objects.get(username=username);
-            print(user, type(user),"in try of las")
             rec.seeders.add(user)
             rec.save()
         except User.DoesNotExist:
@@ -101,7 +83,6 @@ def postdata(request):
                 user_temp=User.objects.get(email=email);
                 if(user_temp.username==username):
                     continue;
-                print(user_temp,"in try ")
                 friendsList=json.loads(user.profile.friendsList)
                 if email not in friendsList:
                     friendsList.append(email);
@@ -116,9 +97,7 @@ def postdata(request):
                 user=User.objects.get(email=email);
                 if(user.username==username):
                     continue;
-                print(user, type(user),"in try ")
                 rec.allowed_users.add(user)
-                print(rec.allowed_users.all())
                 rec.save()
             except User.DoesNotExist:
                 print ("user doesn't exist in exception loop")
@@ -134,7 +113,6 @@ def updatedata(request):
 
         for torrent in torrentList:
             try:
-                print(" in try block")
                 rec=SharedList.objects.get(magnet_link=torrent);
             except SharedList.DoesNotExist:
                 rec=SharedList(magnet_link=torrent)
@@ -143,7 +121,6 @@ def updatedata(request):
 
             try:
                 user=User.objects.get(username=username);
-                print(user, type(user),"in try of las /update")
                 rec.seeders.add(user)
                 rec.last_active_time=time.time()
             except User.DoesNotExist:
