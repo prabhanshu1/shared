@@ -9,15 +9,15 @@
         <!-- Optional Bootstrap theme -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
         <!-- <link rel="stylesheet" href="{% static "css/display.css" %}"> -->
+        <link rel="stylesheet" type="text/css" href="{% static "css/display.css" %}">
         <script src="{% static "js/modules/webtorrent.min.js" %}"></script>
         <script src="{% static "js/modules/dragdrop.min.js" %}" ></script>
         <script src="{% static "js/modules/jquery.min.js" %}"></script>
-        <script src="{% static "js/util.js"%}"></script>
         <script src="{% static "js/download.js"%}"></script>
-        <script src="{% static "js/seed.js"%}"></script>
 
     </head>
     <body>
+        <h1> Shared </h1>
         {% if user.is_authenticated %}
         <h6>Welcome, {{ user.get_username }}. Thanks for logging in.</h6>
         {% else %}
@@ -27,60 +27,74 @@
 
         <div class="bigcontainer">
             <div class="row">
-                <div class="col-md-8"><hr>
+                <div class="col-md-8" id="Download">
                     <h1>Download</h1>
-                    <h2> Torrent From SELF</h2>
+                    <button id = "Refresh" onclick="refresh()"> Refresh </button>
+                    <hr>
+                    <details>
+                    <summary id="Heading">Torrent From SELF</summary>
 
                     {% for torrent in torrentsFromSelf %}
                     <div class="downloader" id="divSelf{{forloop.counter}}" value={{torrent}} >
-                        <p> Torrent {{forloop.counter}}</p>
+                        <details id="details">
+                        <summary>Torrent {{forloop.counter}}</summary>
                         <button onclick="start(this.closest('div'))"> Start</button>
                         <p id="showFiles"></p>
                         <p id="showProgress"> </p>
                         <div class="log" id="log">  </div>
+                        </details>
                     </div>
                     {% endfor %}
-
+                    </details>
                     <hr>
-
-                    <h2> Torrent from Friends</h2>
+                    <details>
+                    <summary id="Heading"> Torrent from Friends</summary>
 
                     {% for key,value in friendsTorrent.items %}
                     <p> Torrent from {{key}} </p>
                     {% for torrent in value %}
                     <div class="downloader" id="div{{key}}{{forloop.counter}}" value={{torrent}} >
-                        <p> Torrent {{forloop.counter}}</p>
+                        <details>
+                        <summary> Torrent {{forloop.counter}}</summary>
                         <button onclick="start(this.closest('div'))"> Start</button>
                         <p id="showFiles"></p>
                         <p id="showProgress"> </p>
                         <div class="log" id="log">  </div>
+                        </details>
                     </div>
                     {% endfor %}
                     {% endfor %}
-
+                    </details>
                     <hr>
-
-                    <h2> Torrent From Others</h2>
+                    <details>
+                    <summary id="Heading"> Torrent From Others </summary>
 
 
                     {% for torrent in torrentsFromOther %}
                     <p> Torrent seeders: {% for seeders in torrent.seeders.all %} {{seeders.email}} {% endfor %} </p>
 
                     <div class="downloader" id="divOthers{{forloop.counter}}" value={{torrent.magnet_link}} >
-                        <p> Torrent {{forloop.counter}}</p>
+                        <details>
+                        <summary> Torrent {{forloop.counter}}</summary>
                         <button onclick="start(this.closest('div'))"> Start</button>
                         <p id="showFiles"></p>
                         <p id="showProgress"> </p>
                         <div class="log" id="log">  </div>
+                        </details>
                     </div>
                     {% endfor %}
-
+                    </details>
+                    <hr>
                 </div>
-                <div class="col-md-4">
+                <div class="col-md-4" id="Seed">
                     <h1> Seed </h1>
+                    <hr>
                     <div id="container">
                         <div class="seeder" id="seeder" >
-                            <p id="selectedFiles"></p>
+                        <details>
+                            <summary id="summary">
+                            
+                            </summary>
                             <p id="selectedEmails"></p>
                             <p id="friendsToAdd"></p>
                             <input type="file" id="upload" multiple onchange="addFiles(this.closest('div'))"></input>
@@ -99,6 +113,7 @@
 
                             <hr>
                             <br>
+                        </details>
                         </div>
 
                     </div>
@@ -109,6 +124,8 @@
             </div>
         </div>
 
+        <script src="{% static "js/util.js"%}"></script>
+        <script src="{% static "js/seed.js"%}"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     </body>
 

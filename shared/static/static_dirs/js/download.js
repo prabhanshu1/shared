@@ -31,7 +31,7 @@ function start(div) {
 
         torrent.files.forEach(function (file) {
             console.log(file)
-            file.appendTo($(div.children.log)[0],{autoplay:false}, function (err, elem) {
+            file.appendTo($(div.children[0].children.log)[0],{autoplay:false}, function (err, elem) {
                 if (err) throw err // file failed to download or display in the DOM
                 console.log('New DOM node with the content', elem)
             })

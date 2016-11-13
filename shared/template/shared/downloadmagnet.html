@@ -12,7 +12,7 @@
 
 
     <body>
-        {% if user.is_authenticated %}
+        <!-- {% if user.is_authenticated %}
         <p>Welcome, {{ user.get_username }}. Thanks for logging in.</p>
         {% else %}
         <p>Welcome, new user. Please log in.</p>
@@ -66,7 +66,64 @@
             <div class="log" id="log">  </div>
         </div>
         {% endfor %}
+ -->
+                <h1>Download</h1>
+                    <button id = "Refresh" href="#"> Refresh </button>
+                    <hr>
+                    <details>
+                    <summary id="Heading">Torrent From SELF</summary>
 
+                    {% for torrent in torrentsFromSelf %}
+                    <div class="downloader" id="divSelf{{forloop.counter}}" value={{torrent}} >
+                        <details id="details">
+                        <summary>Torrent {{forloop.counter}}</summary>
+                        <button onclick="start(this.closest('div'))"> Start</button>
+                        <p id="showFiles"></p>
+                        <p id="showProgress"> </p>
+                        <div class="log" id="log">  </div>
+                        </details>
+                    </div>
+                    {% endfor %}
+                    </details>
+                    <hr>
+                    <details>
+                    <summary id="Heading"> Torrent from Friends</summary>
+
+                    {% for key,value in friendsTorrent.items %}
+                    <p> Torrent from {{key}} </p>
+                    {% for torrent in value %}
+                    <div class="downloader" id="div{{key}}{{forloop.counter}}" value={{torrent}} >
+                        <details>
+                        <summary> Torrent {{forloop.counter}}</summary>
+                        <button onclick="start(this.closest('div'))"> Start</button>
+                        <p id="showFiles"></p>
+                        <p id="showProgress"> </p>
+                        <div class="log" id="log">  </div>
+                        </details>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                    </details>
+                    <hr>
+                    <details>
+                    <summary id="Heading"> Torrent From Others </summary>
+
+
+                    {% for torrent in torrentsFromOther %}
+                    <p> Torrent seeders: {% for seeders in torrent.seeders.all %} {{seeders.email}} {% endfor %} </p>
+
+                    <div class="downloader" id="divOthers{{forloop.counter}}" value={{torrent.magnet_link}} >
+                        <details>
+                        <summary> Torrent {{forloop.counter}}</summary>
+                        <button onclick="start(this.closest('div'))"> Start</button>
+                        <p id="showFiles"></p>
+                        <p id="showProgress"> </p>
+                        <div class="log" id="log">  </div>
+                        </details>
+                    </div>
+                    {% endfor %}
+                    </details>
+                    <hr>
     </body>
     <!-- <script>
          $( ".downloader" ).each(function( i ) {

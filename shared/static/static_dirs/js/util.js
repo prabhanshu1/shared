@@ -13,7 +13,7 @@ function updateStats(torrent,div) {
         "<p> Peers: "+torrent.numPeers+" Total Downloaded: "+formatBytes(torrent.downloaded)+"</p>"+
         "<p> Progress "+(torrent.progress*100).toFixed(1)+"%"+"\tTime Remaining: "+(torrent.timeRemaining/1000).toFixed(1)+" Sec" +"</p>"
     //test=div;
-    $(div.children.showProgress).html(str)
+    $(div.children[0].children.showProgress).html(str)
 }
 
 function removeFile(div,fileId)
@@ -34,7 +34,8 @@ function showFilesxxx(div)
     }
     str+="</ul>"
     str+="</p>"
-    $(div.children.selectedFiles).html(str)
+
+    $(div.children[0].children.summary).html(str)
 }
 
 function showEmailsxxx(div)
@@ -47,7 +48,7 @@ function showEmailsxxx(div)
     }
     str+="</ul>"
     str+="</p>"
-    $(div.children.selectedEmails).html(str)
+    $(div.children[0].children.selectedEmails).html(str)
 }
 
 function removeEmail(div,emailId)
@@ -68,7 +69,7 @@ function showFriendsxxx(div)
     }
     str+="</ul>"
     str+="</p>"
-    $(div.children.friendsToAdd).html(str)
+    $(div.children[0].children.friendsToAdd).html(str)
 }
 
 function removeFriend(div,friendId)
@@ -89,13 +90,13 @@ function showFiles(fileList,div)
     }
     str+="</ul>"
     str+="</p>"
-    $(div.children.showFiles).html(str)
+    $(div.children[0].children.showFiles).html(str)
 }
 function log (str,div) {
     var p = document.createElement('p')
     p.innerHTML = str
     // document.querySelector('.'+className).appendChild(p)
-    $(div.children.log).append(p)
+    $(div.children[0].children.log).append(p)
 }
 
 
@@ -120,6 +121,12 @@ function csrfSafeMethod(method) {
     return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
 }
 
+$(function refresh() {
+    $('#Refresh').on('click', function(){
+        $('#Download').load("../../download")
+    });
+});
+
 $.ajaxSetup({
     beforeSend: function(xhr, settings) {
         if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
@@ -127,3 +134,4 @@ $.ajaxSetup({
         }
     }
 });
+

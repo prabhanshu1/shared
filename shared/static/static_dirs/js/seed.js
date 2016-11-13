@@ -17,8 +17,9 @@ window.setInterval(function(){
 }, 10000);
 
 function addFiles(div) {
-    //test=div;
-    var fileList= div.children.upload.files;
+    test=div;
+    console.log(div)
+    var fileList= div.children[0].children.upload.files;
     // if ($.inArray(fileList,fileStore[div.id]) != -1)
     // {
     //     alert("Files: "+fileList+" Already Added to file List");
@@ -32,7 +33,7 @@ function addFiles(div) {
 }
 
 function addEmails(div) {
-    var email= div.children.email.value;
+    var email= div.children[0].children.email.value;
     if ($.inArray(email,emailStore[div.id]) != -1)
     {
         alert("Email: "+email+" Already Added to Email List");
@@ -50,18 +51,19 @@ function addSeederDiv(){
     var tt=document.getElementById("seeder");
     var cln=tt.cloneNode(true);
     cln.id="seeder"+seederDivNo;
-    cln.children.selectedEmails.innerHTML="";
-    cln.children.selectedFiles.innerHTML="";
-    cln.children.friendsToAdd.innerHTML="";
-    cln.children.showProgress.innerHTML="";
-    cln.children.log.innerHTML="";
+    cln.children[0].children.selectedEmails.innerHTML="";
+    cln.children[0].children.summary.children[0].innerHTML=""
+    //cln.children[0].children.selectedFiles.innerHTML="";
+    cln.children[0].children.friendsToAdd.innerHTML="";
+    cln.children[0].children.showProgress.innerHTML="";
+    cln.children[0].children.log.innerHTML="";
     document.getElementById('container').appendChild(cln);
 
     seederDivNo=seederDivNo+1;
 }
 
 function addFriends(div) {
-    var friend= div.children.email.value;
+    var friend= div.children[0].children.email.value;
     if ($.inArray(friend,friendStore[div.id]) != -1)
     {
         alert("Friend: "+friend+" Already Added to Friend List");
@@ -100,7 +102,7 @@ function startSeeding(div) {
         intervalList[div.id]=[];
         intervalList[div.id].push(interval);
         torrent.files.forEach(function(file) {
-            file.appendTo($(div.children.log)[0], {
+            file.appendTo($(div.children[0].children.log)[0], {
                 autoplay: false
             }, function(err, elem) {
                 if (err) throw err; // file failed to download or display in the DOM

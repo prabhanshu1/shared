@@ -1,3 +1,14 @@
-h2 {
-    color: #FCA285;
-}
+body {background-color: lightyellow;}
+h6 { text-align: right;}
+h1 {text-align: center;}
+#heading{ font-size: 24px; }
+#summary { font-size: 24px;}
+#download{ padding-left: 5%;
+			padding-right: 5%; 
+			background-color: lightblue;
+			height:100%;
+			}
+#Seed { padding-left: 5%;
+		padding-right: 5%;
+		background-color: lightgreen;
+		height:100%;}
